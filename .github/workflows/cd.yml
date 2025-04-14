@@ -1,5 +1,4 @@
 name: Cloud Functions Platform CD
-
 on:
   push:
     branches: [ main ]
@@ -24,7 +23,17 @@ jobs:
     - name: Create deployment package
       run: |
         mkdir -p deployment
-        cp -r backend frontend requirements.txt deployment/
+        cp -r backend deployment/
+        # Check if frontend directory exists before copying
+        if [ -d "frontend" ]; then
+          cp -r frontend deployment/
+        else
+          mkdir -p deployment/frontend
+          cp -r frontend/app.py deployment/frontend/
+          mkdir -p deployment/frontend/pages
+          cp -r frontend/pages/dashboard.py deployment/frontend/pages/
+        fi
+        cp requirements.txt deployment/
         cd deployment && zip -r ../deployment.zip .
         
     - name: Deploy to development environment
