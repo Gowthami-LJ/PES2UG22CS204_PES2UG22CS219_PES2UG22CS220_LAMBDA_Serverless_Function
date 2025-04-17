@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from typing import Optional, List, Dict, Any
 import logging
 import statistics
+# Just testing CI/CD trigger 🚀
+
 
 from backend.database import Function, SessionLocal, create_tables
 from backend.metrics import ExecutionMetric, save_execution_metrics, get_metrics_for_function, get_aggregated_metrics, create_metrics_tables
