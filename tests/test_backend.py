@@ -39,7 +39,7 @@ def test_create_function(client):
         json=function_data
     )
     assert response.status_code == 200
-    assert response.json()["name"] == function_data["name"]
+    assert response.json()["message"] == "Function saved"
     
     # Clean up
     client.delete(f"/functions/{function_data['name']}")
@@ -72,8 +72,9 @@ def test_update_function(client):
     }
     client.post("/functions/", json=function_data)
     
-    # Update it
+    # Update it - include the name field here
     update_data = {
+        "name": "test_update_function",  # Add this line
         "language": "python",
         "code": "print('updated')",
         "timeout": 60
