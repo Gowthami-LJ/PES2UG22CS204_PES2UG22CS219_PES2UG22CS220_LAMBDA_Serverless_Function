@@ -10,6 +10,7 @@ print(f"Starlette version: {starlette.__version__}")
 print(f"HTTPX version: {httpx.__version__}")
 
 # Now try the original approach, without context manager
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 from fastapi.testclient import TestClient
 from backend.main import app
 
