@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from backend.main import app
 
-client = TestClient(app)
+client = TestClient(app=app)
 
 def test_list_functions():
     response = client.get("/functions/")
