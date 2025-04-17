@@ -1,17 +1,21 @@
 import sys
 import os
 import pytest
-from fastapi.testclient import TestClient
+import fastapi
+import starlette
+import httpx
 
-# Add the parent directory to path so we can import the backend module
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+print(f"FastAPI version: {fastapi.__version__}")
+print(f"Starlette version: {starlette.__version__}")
+print(f"HTTPX version: {httpx.__version__}")
+
+# Now try the original approach, without context manager
+from fastapi.testclient import TestClient
 from backend.main import app
 
 @pytest.fixture
 def client():
-    # Create the client without any context manager
-    test_client = TestClient(app)
-    return test_client
+    return TestClient(app)
 
 def test_list_functions(client):
     response = client.get("/functions/")
