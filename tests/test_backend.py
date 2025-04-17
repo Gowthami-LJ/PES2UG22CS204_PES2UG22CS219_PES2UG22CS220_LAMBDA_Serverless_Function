@@ -5,17 +5,19 @@ from fastapi.testclient import TestClient
 
 # Add the parent directory to path so we can import the backend module
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from backend.main import app
 
-client = TestClient(app=app)
+@pytest.fixture
+def client():
+    with TestClient(app) as test_client:
+        yield test_client
 
-def test_list_functions():
+def test_list_functions(client):
     response = client.get("/functions/")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
-def test_create_function():
+def test_create_function(client):
     function_data = {
         "name": "test_function",
         "language": "python",
@@ -36,7 +38,7 @@ def test_create_function():
     # Clean up
     client.delete(f"/functions/{function_data['name']}")
 
-def test_get_function():
+def test_get_function(client):
     # Create a function first
     function_data = {
         "name": "test_get_function",
@@ -54,7 +56,7 @@ def test_get_function():
     # Clean up
     client.delete(f"/functions/{function_data['name']}")
 
-def test_update_function():
+def test_update_function(client):
     # Create a function first
     function_data = {
         "name": "test_update_function",
@@ -83,7 +85,7 @@ def test_update_function():
     # Clean up
     client.delete(f"/functions/{function_data['name']}")
 
-def test_delete_function():
+def test_delete_function(client):
     # Create a function first
     function_data = {
         "name": "test_delete_function",
