@@ -9,8 +9,9 @@ from backend.main import app
 
 @pytest.fixture
 def client():
-    with TestClient(app) as test_client:
-        yield test_client
+    # Create the client without any context manager
+    test_client = TestClient(app)
+    return test_client
 
 def test_list_functions(client):
     response = client.get("/functions/")
