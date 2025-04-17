@@ -44,9 +44,4 @@ jobs:
       with:
         fail_ci_if_error: false
         
-    - name: Install dependencies
-      run: |
-      	python -m pip install --upgrade pip
-      	pip install -r requirements.txt
-    
     
